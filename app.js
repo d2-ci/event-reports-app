@@ -996,8 +996,34 @@
 
 /***/ },
 /* 15 */
-4,
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _lodash = __webpack_require__(88);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/**
+	 * Check if the value is a Function
+	 *
+	 * @name isFunction
+	 * @param {*} param Value to be checked
+	 * @returns {boolean} Returns true when the `param` is a Function
+	 */
+	exports.default = _lodash2.default;
+	//# sourceMappingURL=isFunction.js.map
+
+/***/ },
 /* 16 */
+4,
+/* 17 */
 /***/ function(module, exports) {
 
 	var core = module.exports = { version: '2.6.9' };
@@ -1005,7 +1031,7 @@
 
 
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports) {
 
 	// https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
@@ -1017,7 +1043,7 @@
 
 
 /***/ },
-/* 18 */
+/* 19 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1043,7 +1069,7 @@
 	//# sourceMappingURL=containerConfig.js.map
 
 /***/ },
-/* 19 */
+/* 20 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -1094,7 +1120,7 @@
 	//# sourceMappingURL=arrayUnique.js.map
 
 /***/ },
-/* 20 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1118,32 +1144,6 @@
 	 */
 	exports.default = _lodash2.default;
 	//# sourceMappingURL=isBoolean.js.map
-
-/***/ },
-/* 21 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _lodash = __webpack_require__(88);
-	
-	var _lodash2 = _interopRequireDefault(_lodash);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	/**
-	 * Check if the value is a Function
-	 *
-	 * @name isFunction
-	 * @param {*} param Value to be checked
-	 * @returns {boolean} Returns true when the `param` is a Function
-	 */
-	exports.default = _lodash2.default;
-	//# sourceMappingURL=isFunction.js.map
 
 /***/ },
 /* 22 */
@@ -3211,7 +3211,7 @@
 
 /***/ },
 /* 42 */
-[681, 19, 5],
+[681, 20, 5],
 /* 43 */
 /***/ function(module, exports) {
 
@@ -3269,7 +3269,7 @@
 /* 45 */
 5,
 /* 46 */
-20,
+21,
 /* 47 */
 /***/ function(module, exports) {
 
@@ -4166,7 +4166,7 @@
 
 /***/ },
 /* 53 */
-16,
+17,
 /* 54 */
 /***/ function(module, exports) {
 
@@ -4181,7 +4181,7 @@
 
 /***/ },
 /* 55 */
-17,
+18,
 /* 56 */
 [676, 120, 126, 128, 24],
 /* 57 */
@@ -4213,8 +4213,8 @@
 /* 60 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var global = __webpack_require__(17);
-	var core = __webpack_require__(16);
+	var global = __webpack_require__(18);
+	var core = __webpack_require__(17);
 	var hide = __webpack_require__(36);
 	var redefine = __webpack_require__(146);
 	var ctx = __webpack_require__(59);
@@ -4264,8 +4264,8 @@
 /* 62 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var core = __webpack_require__(16);
-	var global = __webpack_require__(17);
+	var core = __webpack_require__(17);
+	var global = __webpack_require__(18);
 	var SHARED = '__core-js_shared__';
 	var store = global[SHARED] || (global[SHARED] = {});
 	
@@ -4330,7 +4330,7 @@
 
 	var store = __webpack_require__(62)('wks');
 	var uid = __webpack_require__(66);
-	var Symbol = __webpack_require__(17).Symbol;
+	var Symbol = __webpack_require__(18).Symbol;
 	var USE_SYMBOL = typeof Symbol == 'function';
 	
 	var $exports = module.exports = function (name) {
@@ -4372,7 +4372,7 @@
 	
 	var _arrayPluck2 = _interopRequireDefault(_arrayPluck);
 	
-	var _arrayUnique = __webpack_require__(19);
+	var _arrayUnique = __webpack_require__(20);
 	
 	var _arrayUnique2 = _interopRequireDefault(_arrayUnique);
 	
@@ -4549,7 +4549,7 @@
 	
 	var _arrayFrom2 = _interopRequireDefault(_arrayFrom);
 	
-	var _arrayUnique = __webpack_require__(19);
+	var _arrayUnique = __webpack_require__(20);
 	
 	var _arrayUnique2 = _interopRequireDefault(_arrayUnique);
 	
@@ -10564,7 +10564,7 @@
 
 /***/ },
 /* 85 */
-19,
+20,
 /* 86 */
 /***/ function(module, exports) {
 
@@ -11984,7 +11984,7 @@
 
 /***/ },
 /* 104 */
-21,
+15,
 /* 105 */
 11,
 /* 106 */
@@ -12286,7 +12286,7 @@
 	
 	var _arrayUnique2 = _interopRequireDefault(_arrayUnique);
 	
-	var _isString = __webpack_require__(15);
+	var _isString = __webpack_require__(16);
 	
 	var _isString2 = _interopRequireDefault(_isString);
 	
@@ -12418,7 +12418,7 @@
 	
 	var _isObject2 = _interopRequireDefault(_isObject);
 	
-	var _isString = __webpack_require__(15);
+	var _isString = __webpack_require__(16);
 	
 	var _isString2 = _interopRequireDefault(_isString);
 	
@@ -12964,7 +12964,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(149);
-	module.exports = __webpack_require__(16).Array.fill;
+	module.exports = __webpack_require__(17).Array.fill;
 
 
 /***/ },
@@ -12972,7 +12972,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(150);
-	module.exports = __webpack_require__(16).Array.find;
+	module.exports = __webpack_require__(17).Array.find;
 
 
 /***/ },
@@ -13231,7 +13231,7 @@
 
 /***/ },
 /* 137 */
-[670, 25, 17],
+[670, 25, 18],
 /* 138 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -13280,7 +13280,7 @@
 /* 146 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var global = __webpack_require__(17);
+	var global = __webpack_require__(18);
 	var hide = __webpack_require__(36);
 	var has = __webpack_require__(139);
 	var SRC = __webpack_require__(66)('src');
@@ -13288,7 +13288,7 @@
 	var TO_STRING = 'toString';
 	var TPL = ('' + $toString).split(TO_STRING);
 	
-	__webpack_require__(16).inspectSource = function (it) {
+	__webpack_require__(17).inspectSource = function (it) {
 	  return $toString.call(it);
 	};
 	
@@ -13569,7 +13569,7 @@
 	
 	var _isArray2 = _interopRequireDefault(_isArray);
 	
-	var _isBoolean = __webpack_require__(20);
+	var _isBoolean = __webpack_require__(21);
 	
 	var _isBoolean2 = _interopRequireDefault(_isBoolean);
 	
@@ -14895,7 +14895,7 @@
 	
 	var _isObject2 = _interopRequireDefault(_isObject);
 	
-	var _isFunction = __webpack_require__(21);
+	var _isFunction = __webpack_require__(15);
 	
 	var _isFunction2 = _interopRequireDefault(_isFunction);
 	
@@ -15144,7 +15144,7 @@
 	
 	var _arraySort2 = _interopRequireDefault(_arraySort);
 	
-	var _arrayUnique = __webpack_require__(19);
+	var _arrayUnique = __webpack_require__(20);
 	
 	var _arrayUnique2 = _interopRequireDefault(_arrayUnique);
 	
@@ -15156,7 +15156,7 @@
 	
 	var _clone2 = _interopRequireDefault(_clone);
 	
-	var _isBoolean = __webpack_require__(20);
+	var _isBoolean = __webpack_require__(21);
 	
 	var _isBoolean2 = _interopRequireDefault(_isBoolean);
 	
@@ -18041,7 +18041,7 @@
 	
 	var _isArray2 = _interopRequireDefault(_isArray);
 	
-	var _isFunction = __webpack_require__(21);
+	var _isFunction = __webpack_require__(15);
 	
 	var _isFunction2 = _interopRequireDefault(_isFunction);
 	
@@ -18077,7 +18077,7 @@
 	
 	var _arrayTo2 = _interopRequireDefault(_arrayTo);
 	
-	var _arrayUnique = __webpack_require__(19);
+	var _arrayUnique = __webpack_require__(20);
 	
 	var _arrayUnique2 = _interopRequireDefault(_arrayUnique);
 	
@@ -18246,12 +18246,7 @@
 	
 	                calendarManager.setBaseUrl(t.getPath());
 	                calendarManager.setDateFormat(t.getDateFormat());
-	                calendarManager.init(t.systemSettings.keyCalendar);
-	
-	                // allow for other code to be executed after all the init stuff is done
-	                if (callbackFn) {
-	                    callbackFn();
-	                }
+	                calendarManager.init(t.systemSettings.keyCalendar, callbackFn);
 	            }
 	        }).run();
 	    };
@@ -18582,6 +18577,10 @@
 	
 	var _isObject2 = _interopRequireDefault(_isObject);
 	
+	var _isFunction = __webpack_require__(15);
+	
+	var _isFunction2 = _interopRequireDefault(_isFunction);
+	
 	var _arrayContains = __webpack_require__(5);
 	
 	var _arrayContains2 = _interopRequireDefault(_arrayContains);
@@ -18659,7 +18658,7 @@
 	
 	// dep 1
 	
-	CalendarManager.prototype.init = function (calendarId, dateFormat) {
+	CalendarManager.prototype.init = function (calendarId, callbackFn) {
 	    calendarId = this.getCalendarIdMap()[calendarId] || calendarId || this.defaultCalendarId;
 	
 	    if (this.calendar && this.periodGenerator) {
@@ -18671,6 +18670,10 @@
 	        success = function success() {
 	        t.createCalendar(calendarId);
 	        t.createPeriodGenerator(calendarId);
+	
+	        if ((0, _isFunction2.default)(callbackFn)) {
+	            callbackFn();
+	        }
 	    };
 	
 	    if ((0, _arrayContains2.default)(t.calendarIds, calendarId)) {
@@ -18873,7 +18876,7 @@
 	});
 	exports.InstanceManager = undefined;
 	
-	var _isFunction = __webpack_require__(21);
+	var _isFunction = __webpack_require__(15);
 	
 	var _isFunction2 = _interopRequireDefault(_isFunction);
 	
@@ -19319,7 +19322,7 @@
 	
 	var _isObject2 = _interopRequireDefault(_isObject);
 	
-	var _isFunction = __webpack_require__(21);
+	var _isFunction = __webpack_require__(15);
 	
 	var _isFunction2 = _interopRequireDefault(_isFunction);
 	
@@ -19916,7 +19919,7 @@
 	
 	var _isArray2 = _interopRequireDefault(_isArray);
 	
-	var _isFunction = __webpack_require__(21);
+	var _isFunction = __webpack_require__(15);
 	
 	var _isFunction2 = _interopRequireDefault(_isFunction);
 	
@@ -21598,7 +21601,7 @@
 	
 	var _isObject2 = _interopRequireDefault(_isObject);
 	
-	var _isBoolean = __webpack_require__(20);
+	var _isBoolean = __webpack_require__(21);
 	
 	var _isBoolean2 = _interopRequireDefault(_isBoolean);
 	
@@ -26285,7 +26288,7 @@
 	
 	var _isArray2 = _interopRequireDefault(_isArray);
 	
-	var _isBoolean = __webpack_require__(20);
+	var _isBoolean = __webpack_require__(21);
 	
 	var _isBoolean2 = _interopRequireDefault(_isBoolean);
 	
@@ -30003,7 +30006,7 @@
 	
 	var _isArray2 = _interopRequireDefault(_isArray);
 	
-	var _isBoolean = __webpack_require__(20);
+	var _isBoolean = __webpack_require__(21);
 	
 	var _isBoolean2 = _interopRequireDefault(_isBoolean);
 	
@@ -30068,6 +30071,10 @@
 	
 	    // stores
 	
+	    var htmlEscapeProgramName = function htmlEscapeProgramName(program) {
+	        program.name = Ext.htmlEncode(program.name);
+	    };
+	
 	    var programStore = Ext.create('Ext.data.Store', {
 	        fields: ['id', 'name', 'enrollmentDateLabel', 'incidentDateLabel', 'programType'],
 	        proxy: {
@@ -30075,7 +30082,12 @@
 	            url: encodeURI(apiPath + '/programs.json?fields=id,' + displayPropertyUrl + ',enrollmentDateLabel,incidentDateLabel,programType&paging=false'),
 	            reader: {
 	                type: 'json',
-	                root: 'programs'
+	                root: 'programs',
+	                getResponseData: function getResponseData(response) {
+	                    var data = JSON.parse(response.responseText);
+	                    data.programs.forEach(htmlEscapeProgramName);
+	                    return data;
+	                }
 	            },
 	            pageParam: false,
 	            startParam: false,
@@ -30396,6 +30408,7 @@
 	
 	        var load = function load(_program) {
 	            var stages = _program.programStages;
+	            stages.forEach(htmlEscapeProgramName);
 	            var dimensions = [];
 	
 	            // categories
@@ -33283,6 +33296,7 @@
 	
 	    // private properties
 	    var _layouts = [];
+	    var _lastLayouts = [];
 	    var _isPending = false;
 	    var _isReady = false;
 	
@@ -33309,6 +33323,10 @@
 	        _runFn();
 	    };
 	
+	    t.reload = function () {
+	        t.load(_lastLayouts);
+	    };
+	
 	    t.getType = function () {
 	        return type;
 	    };
@@ -33327,6 +33345,8 @@
 	        var initializeFn = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initializeFn || _initializeFn;
 	
 	        if (_isReady) {
+	            _lastLayouts = [].concat(_toConsumableArray(_layouts));
+	
 	            while (_layouts.length) {
 	                renderFn(t, _layouts.shift());
 	            }
@@ -33563,7 +33583,7 @@
 	
 	var _isString2 = _interopRequireDefault(_isString);
 	
-	var _containerConfig = __webpack_require__(18);
+	var _containerConfig = __webpack_require__(19);
 	
 	var _containerConfig2 = _interopRequireDefault(_containerConfig);
 	
@@ -33823,7 +33843,7 @@
 	
 	var _isString2 = _interopRequireDefault(_isString);
 	
-	var _containerConfig = __webpack_require__(18);
+	var _containerConfig = __webpack_require__(19);
 	
 	var _containerConfig2 = _interopRequireDefault(_containerConfig);
 	
@@ -33959,7 +33979,7 @@
 	
 	var _isString2 = _interopRequireDefault(_isString);
 	
-	var _containerConfig = __webpack_require__(18);
+	var _containerConfig = __webpack_require__(19);
 	
 	var _containerConfig2 = _interopRequireDefault(_containerConfig);
 	
@@ -34313,7 +34333,7 @@
 	});
 	exports.DataElementStringContainer = undefined;
 	
-	var _containerConfig = __webpack_require__(18);
+	var _containerConfig = __webpack_require__(19);
 	
 	var _containerConfig2 = _interopRequireDefault(_containerConfig);
 	
@@ -34446,7 +34466,7 @@
 	
 	var _isString2 = _interopRequireDefault(_isString);
 	
-	var _containerConfig = __webpack_require__(18);
+	var _containerConfig = __webpack_require__(19);
 	
 	var _containerConfig2 = _interopRequireDefault(_containerConfig);
 	
@@ -35291,7 +35311,7 @@
 
 /***/ },
 /* 228 */
-[685, 12, 22, 15],
+[685, 12, 22, 16],
 /* 229 */
 43,
 /* 230 */
@@ -48135,7 +48155,7 @@
 	
 	var _isObject2 = _interopRequireDefault(_isObject);
 	
-	var _isString = __webpack_require__(15);
+	var _isString = __webpack_require__(16);
 	
 	var _isString2 = _interopRequireDefault(_isString);
 	
@@ -48931,7 +48951,7 @@
 	
 	var _isObject2 = _interopRequireDefault(_isObject);
 	
-	var _isString = __webpack_require__(15);
+	var _isString = __webpack_require__(16);
 	
 	var _isString2 = _interopRequireDefault(_isString);
 	
@@ -49391,7 +49411,7 @@
 	
 	var _isArray2 = _interopRequireDefault(_isArray);
 	
-	var _isString = __webpack_require__(15);
+	var _isString = __webpack_require__(16);
 	
 	var _isString2 = _interopRequireDefault(_isString);
 	
@@ -50081,7 +50101,7 @@
 /* 417 */
 221,
 /* 418 */
-[684, 15, 51, 12, 22],
+[684, 16, 51, 12, 22],
 /* 419 */
 /***/ function(module, exports) {
 
@@ -50183,7 +50203,7 @@
 	  }
 	});
 	
-	var _isString = __webpack_require__(15);
+	var _isString = __webpack_require__(16);
 	
 	Object.defineProperty(exports, 'isString', {
 	  enumerable: true,
@@ -50468,7 +50488,7 @@
 	});
 	exports.default = isArrayOfStrings;
 	
-	var _isString = __webpack_require__(15);
+	var _isString = __webpack_require__(16);
 	
 	var _isString2 = _interopRequireDefault(_isString);
 	

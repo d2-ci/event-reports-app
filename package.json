@@ -1,66 +1,73 @@
 {
-    "name": "event-reports-app",
-    "version": "1.0.0",
-    "description": "",
-    "license": "BSD-3-Clause",
-    "private": true,
-    "scripts": {
-        "build": "d2-app-scripts build",
-        "start": "d2-app-scripts start",
-        "test": "d2-app-scripts test",
-        "deploy": "d2-app-scripts deploy",
-        "lint": "d2-style check",
-        "format": "d2-style apply",
-        "validate-commit": "d2-style check --staged",
-        "validate-push": "yarn test"
+  "name": "event-reports-app",
+  "version": "33.2.25",
+  "description": "Event reports app",
+  "main": "index.html",
+  "scripts": {
+    "lint": "./node_modules/eslint/bin/eslint.js src `git diff --cached --name-only | grep \\.js$`",
+    "validate": "npm ls --depth 0",
+    "prestart": "d2-manifest package.json manifest.webapp",
+    "start": "webpack-dev-server",
+    "build": "rm -rf build && webpack --config webpack.config.prod.js && cp ./index.html build && cp ./jquery*.min.js build && cp -r i18n build && cp -r dhis2 build && cp -r extjs build && npm run manifest",
+    "manifest": "d2-manifest package.json build/manifest.webapp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dhis2/event-reports-app.git"
+  },
+  "keywords": [
+    "DHIS 2",
+    "HISP",
+    "Pivot"
+  ],
+  "author": "Jan Henrik Øverland",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/dhis2/event-reports-app/issues"
+  },
+  "homepage": "https://github.com/dhis2/event-reports-app#readme",
+  "dependencies": {
+    "d2-analysis": "33.2.24",
+    "d2-utilizr": "0.2.13"
+  },
+  "devDependencies": {
+    "babel-core": "^6.3.13",
+    "babel-eslint": "5.0.0-beta6",
+    "babel-loader": "^6.2.0",
+    "babel-plugin-transform-object-assign": "^6.22.0",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-stage-2": "^6.3.13",
+    "css-loader": "0.18.0",
+    "d2-manifest": "1.0.0",
+    "eslint": "1.3.1",
+    "eslint-config-dhis2": "0.0.5",
+    "eslint-plugin-react": "3.3.1",
+    "file-loader": "0.8.5",
+    "img-loader": "^1.2.2",
+    "json-loader": "^0.5.7",
+    "node-sass": "4.13.1",
+    "sass-loader": "7",
+    "style-loader": "0.12.3",
+    "susy": "2.2.5",
+    "url-loader": "^0.5.7",
+    "webpack": "1.12.9",
+    "webpack-dev-server": "1.14.0"
+  },
+  "manifest.webapp": {
+    "name": "DHIS2 event reports app",
+    "icons": {
+      "48": "icon.png"
     },
-    "devDependencies": {
-        "@dhis2/cli-app-scripts": "^8.3.3",
-        "@dhis2/cli-style": "^10.1.1",
-        "@testing-library/jest-dom": "^5.16.2",
-        "@testing-library/react": "^12.1.2",
-        "enzyme": "^3.11.0",
-        "enzyme-adapter-react-16": "^1.15.6",
-        "identity-obj-proxy": "^3.0.0",
-        "jest-enzyme": "^7.1.2",
-        "redux-mock-store": "^1.5.4"
+    "developer": {
+      "url": "",
+      "name": "DHIS2 visualization team"
     },
-    "dependencies": {
-        "@dhis2/analytics": "^23.6.0",
-        "@dhis2/app-runtime": "^3.2.8",
-        "@dhis2/d2-ui-rich-text": "^7.3.3",
-        "@dhis2/ui": "^8.1.0",
-        "@dnd-kit/core": "^5.0.1",
-        "@dnd-kit/sortable": "^6.0.0",
-        "@dnd-kit/utilities": "^3.1.0",
-        "@testing-library/jest-dom": "^5.16.2",
-        "@testing-library/react": "^12.1.2",
-        "history": "^5.0.1",
-        "lodash-es": "^4.17.21",
-        "prop-types": "^15.7.2",
-        "query-string": "^7.0.1",
-        "react": "^16.14",
-        "react-beautiful-dnd": "^13.1.0",
-        "react-redux": "^7.2.5",
-        "redux-logger": "^3.0.6",
-        "redux-mock-store": "^1.5.4",
-        "redux-thunk": "^2.3.0",
-        "reselect": "^4.0.0"
-    },
-    "jest": {
-        "transformIgnorePatterns": [
-            "node_modules/(?!(lodash-es|@dhis2/d2-ui-[a-z-]+)/)"
-        ],
-        "setupFilesAfterEnv": [
-            "./config/testSetup.js"
-        ],
-        "moduleNameMapper": {
-            "\\.css$": "identity-obj-proxy"
-        }
-    },
-    "resolutions": {
-        "@dhis2/prop-types": "^1.6.4",
-        "@dhis2/ui": "^8.1.0",
-        "i18next": "^20.5.0"
+    "activities": {
+      "dhis": {
+        "href": "..",
+        "auth": "admin:district",
+        "devHref": "https://debug.dhis2.org/dev"
+      }
     }
+  }
 }

@@ -15329,6 +15329,27 @@
 	        return id;
 	    };
 	
+	    var getSplitElementId = function getSplitElementId(id) {
+	        return id.split('.').reverse()[0];
+	    };
+	
+	    // 2.38: use element ids instead of stage.element ids
+	    (function () {
+	        config.headers.filter(function (h) {
+	            return h.name.includes('.');
+	        }).forEach(function (h) {
+	            return h.name = getSplitElementId(h.name);
+	        });
+	
+	        var dimensions = config.metaData.dimensions;
+	
+	        Object.keys(dimensions).filter(function (key) {
+	            return key.includes('.');
+	        }).forEach(function (key) {
+	            return dimensions[getSplitElementId(key)] = dimensions[key];
+	        });
+	    })();
+	
 	    t.optionCodeIdMap = function () {
 	        var dimensions = config.metaData.dimensions;
 	        var items = config.metaData.items;
@@ -17880,7 +17901,7 @@
 	                        //var sets = Ext.decode(r.responseText).optionSets;
 	
 	                        //if (sets.length) {
-	                        //indexedDbManager.setAll('optionSets', sets).done(function() {
+	                        //indexedDbManager.setAll('optionSets', sets).done(function() {
 	                        //requestManager.ok(t);
 	                        //});
 	                        //}
@@ -17932,7 +17953,7 @@
 	                                        //success: function(r) {
 	                                        //var sets = Ext.decode(r.responseText).optionSets;
 	
-	                                        //indexedDbManager.setAll('optionSets', sets).done(function() {
+	                                        //indexedDbManager.setAll('optionSets', sets).done(function() {
 	                                        //requestManager.ok(t);
 	                                        //});
 	                                        //}
@@ -31024,6 +31045,9 @@
 	                    }));
 	                }
 	            } else if ((0, _isObject2.default)(item)) {
+	                // 2.38
+	                item.programStage = item.programStage || layout.programStage;
+	
 	                var itemConfig = _extends({}, item.data, item.programStage && getDataElementFromStorage(item.programStage.id, item.dimension || item.id), (_program.attributes || []).find(function (attr) {
 	                    return attr.id === item.dimension || attr.id === item.id;
 	                }), (_program.programIndicators || []).find(function (pi) {

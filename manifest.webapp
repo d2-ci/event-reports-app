@@ -1,0 +1,22 @@
+{
+  "launch_path": "index.html",
+  "default_locale": "en",
+  "activities": {
+    "dhis": {
+      "href": "..",
+      "auth": "admin:district",
+      "devHref": "https://debug.dhis2.org/dev"
+    }
+  },
+  "appType": "APP",
+  "name": "DHIS2 event reports app",
+  "version": "33.2.37",
+  "description": "Event reports app",
+  "developer": {
+    "name": "DHIS2 visualization team"
+  },
+  "icons": {
+    "48": "icon.png"
+  },
+  "manifest_generated_at": "Wed May 10 2023 07:11:29 GMT+0000 (Coordinated Universal Time)"
+}

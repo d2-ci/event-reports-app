@@ -9886,6 +9886,7 @@
 	
 	    return Ext.create('Ext.button.Button', {
 	        text: i18n.favorites,
+	        cls: 'push-analytics-favorites-dropdown-menu-button',
 	        menu: {},
 	        handler: function handler(b) {
 	            b.menu = Ext.create('Ext.menu.Menu', {
@@ -9899,6 +9900,7 @@
 	
 	                    var newItem = Ext.create('Ext.menu.Item', {
 	                        text: getTitle(i18n.new_),
+	                        cls: 'push-analytics-new-events-report-menu-item',
 	                        iconCls: 'ns-menu-item-favorite-new',
 	                        disabled: !instanceManager.isStateCurrent(),
 	                        handler: function handler() {
@@ -24474,6 +24476,7 @@
 	        style: 'padding:7px 5px 5px 7px; font-weight:bold'
 	    }, {
 	        text: i18n.image_png + ' (.png)',
+	        cls: 'push-analytics-download-as-png-menu-item',
 	        iconCls: 'ns-menu-item-image',
 	        handler: function handler() {
 	            uiManager.submitSvgForm('png', getFilename());
@@ -25807,6 +25810,7 @@
 	
 	    var downloadButton = Ext.create('Ext.button.Button', {
 	        text: i18n.download,
+	        cls: 'push-analytics-download-dropdown-menu-button',
 	        disabled: true,
 	        menu: {},
 	        handler: function handler(b) {

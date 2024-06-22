@@ -16263,7 +16263,7 @@
 	    // value type
 	    t.valueType = {
 	        'numeric_types': ['NUMBER', 'UNIT_INTERVAL', 'PERCENTAGE', 'INTEGER', 'INTEGER_POSITIVE', 'INTEGER_NEGATIVE', 'INTEGER_ZERO_OR_POSITIVE'],
-	        'text_types': ['TEXT', 'LONG_TEXT', 'LETTER', 'PHONE_NUMBER', 'EMAIL'],
+	        'text_types': ['TEXT', 'LONG_TEXT', 'LETTER', 'PHONE_NUMBER', 'EMAIL', 'URL'],
 	        'boolean_types': ['BOOLEAN', 'TRUE_ONLY'],
 	        'date_types': ['DATE', 'DATETIME', 'AGE'],
 	        'aggregate_aggregatable_types': ['BOOLEAN', 'TRUE_ONLY', 'TEXT', 'LONG_TEXT', 'LETTER', 'INTEGER', 'INTEGER_POSITIVE', 'INTEGER_NEGATIVE', 'INTEGER_ZERO_OR_POSITIVE', 'NUMBER', 'UNIT_INTERVAL', 'PERCENTAGE', 'COORDINATE'],
@@ -31023,7 +31023,9 @@
 	                    return attr.id === item.dimension || attr.id === item.id;
 	                }), (_program.programIndicators || []).find(function (pi) {
 	                    return pi.id === item.dimension || pi.id === item.id;
-	                }));
+	                }), {
+	                    filter: item.filter
+	                });
 	
 	                dataElements.push(_extends({}, itemConfig, {
 	                    programStage: itemConfig.programStage ? itemConfig.programStage : {
@@ -34401,8 +34403,22 @@
 	            return record;
 	        },
 	        setRecord: function setRecord(record) {
-	            this.operatorCmp.setValue(record.operator);
-	            this.valueCmp.setValue(record.filter);
+	            var filter = record.filter;
+	            var operator;
+	            var value;
+	
+	            if (typeof filter === 'string') {
+	                if (filter.substring(0, 3) === 'EQ:') {
+	                    operator = 'EQ';
+	                    value = filter.substring(3);
+	                } else if (filter.substring(0, 5) === 'LIKE:') {
+	                    operator = 'LIKE';
+	                    value = filter.substring(5);
+	                }
+	            }
+	
+	            this.operatorCmp.setValue(operator);
+	            this.valueCmp.setValue(value);
 	        },
 	        initComponent: function initComponent() {
 	            var container = this;

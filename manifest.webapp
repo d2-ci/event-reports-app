@@ -5,12 +5,12 @@
     "dhis": {
       "href": "..",
       "auth": "admin:district",
-      "devHref": "https://debug.dhis2.org/dev"
+      "devHref": "http://localhost:8080"
     }
   },
   "appType": "APP",
   "name": "DHIS2 event reports app",
-  "version": "33.2.65",
+  "version": "33.2.66",
   "description": "Event reports app",
   "developer": {
     "name": "DHIS2 visualization team"
@@ -18,5 +18,5 @@
   "icons": {
     "48": "icon.png"
   },
-  "manifest_generated_at": "Sat Jun 22 2024 21:03:44 GMT+0000 (Coordinated Universal Time)"
+  "manifest_generated_at": "Tue Jun 25 2024 12:21:04 GMT+0000 (Coordinated Universal Time)"
 }

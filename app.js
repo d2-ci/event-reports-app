@@ -9350,7 +9350,7 @@
 	
 	        var refreshInterpretationDataModel = function refreshInterpretationDataModel(interpretationPanel) {
 	            Ext.Ajax.request({
-	                url: encodeURI(apiPath + '/interpretations/' + interpretation.id + '.json?fields=*,user[id,displayName,userCredentials[username]],likedBy[id,displayName],comments[id,lastUpdated,text,user[id,displayName,userCredentials[username]]]'),
+	                url: encodeURI(apiPath + '/interpretations/' + interpretation.id + '.json?fields=*,user[id,displayName,username],likedBy[id,displayName],comments[id,lastUpdated,text,user[id,displayName,username]]'),
 	                method: 'GET',
 	                scope: this,
 	                success: function success(r) {
@@ -10138,7 +10138,7 @@
 	        new refs.api.Request(refs, {
 	            baseUrl: appManager.getApiPath() + '/users.json',
 	            type: 'json',
-	            params: ['query=' + search, 'fields=displayName,userCredentials[username]', 'order=displayName:asc', 'pageSize=5'],
+	            params: ['query=' + search, 'fields=displayName,username', 'order=displayName:asc', 'pageSize=5'],
 	            success: function success(response) {
 	                onSuccess(response.users);
 	            }
@@ -10160,12 +10160,12 @@
 	            return users.map(function (user) {
 	                return {
 	                    xtype: 'label',
-	                    html: user.displayName + " (" + user.userCredentials.username + ")",
+	                    html: user.displayName + " (" + user.username + ")",
 	                    listeners: {
 	                        'render': function render(label) {
 	                            label.getEl().parent().on('click', function () {
 	                                splitText.splice(-1, 1);
-	                                var newText = splitText.join("@") + "@" + user.userCredentials.username;
+	                                var newText = splitText.join("@") + "@" + user.username;
 	                                component.setValue(newText);
 	                                this.hide();
 	                            }, label);
@@ -18036,7 +18036,7 @@
 	        instanceManager = refs.instanceManager;
 	
 	    var apiPath = appManager.getApiPath(),
-	        username = appManager.userAccount.userCredentials.username,
+	        username = appManager.userAccount.username,
 	        eventType = instanceManager.dataStatisticsEventType;
 	
 	    return {
@@ -18130,7 +18130,7 @@
 	        'Content-Type': 'application/json'
 	    };
 	
-	    t.defaultAnalysisFields = ['*', 'interpretations[*,user[id,displayName,userCredentials[username]],likedBy[id,displayName],' + 'comments[id,lastUpdated,text,user[id,displayName,userCredentials[username]]]]', 'columns[dimension,filter,programStage[id],legendSet[id],items[dimensionItem~rename(id),dimensionItemType,$]]', 'rows[dimension,filter,programStage[id],legendSet[id],items[dimensionItem~rename(id),dimensionItemType,$]]', 'filters[dimension,filter,programStage[id],legendSet[id],items[dimensionItem~rename(id),dimensionItemType,$]]', 'program[id,displayName~rename(name),enrollmentDateLabel,incidentDateLabel]', 'programStage[id,displayName~rename(name),executionDateLabel]', 'access', 'userGroupAccesses', 'publicAccess', 'displayDescription', 'user[displayName,userCredentials[username]]', '!href', '!rewindRelativePeriods', '!userOrganisationUnit', '!userOrganisationUnitChildren', '!userOrganisationUnitGrandChildren', '!externalAccess', '!relativePeriods', '!columnDimensions', '!rowDimensions', '!filterDimensions', '!organisationUnitGroups', '!itemOrganisationUnitGroups', '!indicators', '!dataElements', '!dataElementOperands', '!dataElementGroups', '!dataSets', '!periods', '!organisationUnitLevels', '!organisationUnits'];
+	    t.defaultAnalysisFields = ['*', 'interpretations[*,user[id,displayName,username],likedBy[id,displayName],' + 'comments[id,lastUpdated,text,user[id,displayName,username]]]', 'columns[dimension,filter,programStage[id],legendSet[id],items[dimensionItem~rename(id),dimensionItemType,$]]', 'rows[dimension,filter,programStage[id],legendSet[id],items[dimensionItem~rename(id),dimensionItemType,$]]', 'filters[dimension,filter,programStage[id],legendSet[id],items[dimensionItem~rename(id),dimensionItemType,$]]', 'program[id,displayName~rename(name),enrollmentDateLabel,incidentDateLabel]', 'programStage[id,displayName~rename(name),executionDateLabel]', 'access', 'userGroupAccesses', 'publicAccess', 'displayDescription', 'user[displayName,username]', '!href', '!rewindRelativePeriods', '!userOrganisationUnit', '!userOrganisationUnitChildren', '!userOrganisationUnitGrandChildren', '!externalAccess', '!relativePeriods', '!columnDimensions', '!rowDimensions', '!filterDimensions', '!organisationUnitGroups', '!itemOrganisationUnitGroups', '!indicators', '!dataElements', '!dataElementOperands', '!dataElementGroups', '!dataSets', '!periods', '!organisationUnitLevels', '!organisationUnits'];
 	
 	    t.displayPropertyMap = {
 	        'name': 'displayName',
@@ -18264,7 +18264,7 @@
 	        new t.refs.api.Request(t.refs, {
 	            baseUrl: t.getApiPath() + '/me.json',
 	            type: 'json',
-	            params: ['fields=id,firstName,surname,userCredentials[username],settings'],
+	            params: ['fields=id,firstName,surname,username,settings'],
 	            success: function success(response) {
 	                t.userAccount = response;
 	
@@ -33414,7 +33414,7 @@
 	        new Request(refs, {
 	            baseUrl: appManager.getApiPath() + '/me.json',
 	            type: 'json',
-	            param: ['fields=id,firstName,surname,userCredentials[username],settings'],
+	            param: ['fields=id,firstName,surname,username,settings'],
 	            success: function success(response) {
 	                appManager.userAccount = response;
 	

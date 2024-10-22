@@ -12356,7 +12356,7 @@
 	// dep 1
 	
 	var getFullId = function getFullId(dim) {
-	    return (dim.programStage ? dim.programStage.id + '.' : '') + dim.dimension;
+	    return (dim.programStage && dim.programStage.id ? dim.programStage.id + '.' : '') + dim.dimension;
 	};
 	
 	Dimension.prototype.url = function (isSorted, response, isFilter) {
@@ -12428,6 +12428,8 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
 	var Layout = exports.Layout = function Layout(refs, c, applyConfig, forceApplyConfig) {
 	    var t = this;
 	
@@ -12443,6 +12445,24 @@
 	
 	    // inherit
 	    _extends(t, new _d2Analysis.Layout(refs, c, applyConfig));
+	
+	    // data element dimensions
+	    if (c.dataElementDimensions) {
+	        t.dataElementDimensions = c.dataElementDimensions;
+	    }
+	
+	    // add isDataElement to distinguish from attributes and program indicators
+	    if (t.dataElementDimensions) {
+	        [].concat(t.columns, t.rows, t.filters).filter(function (dimension) {
+	            return dimension;
+	        }).forEach(function (dimension) {
+	            if (c.dataElementDimensions.find(function (de) {
+	                return de.dataElement.id === dimension.dimension;
+	            })) {
+	                dimension.isDataElement = true;
+	            }
+	        });
+	    }
 	
 	    // program
 	    t.program = (0, _isObject2.default)(c.program) ? c.program : null;
@@ -12508,11 +12528,6 @@
 	    t.organisationUnit = (0, _isObject2.default)(c.reportParams) && (0, _isBoolean2.default)(c.reportParams.paramOrganisationUnit) ? c.reportParams.paramOrganisationUnit : (0, _isBoolean2.default)(c.organisationUnit) ? c.organisationUnit : false;
 	    t.parentOrganisationUnit = (0, _isObject2.default)(c.reportParams) && (0, _isBoolean2.default)(c.reportParams.paramParentOrganisationUnit) ? c.reportParams.paramParentOrganisationUnit : (0, _isBoolean2.default)(c.parentOrganisationUnit) ? c.parentOrganisationUnit : false;
 	
-	    // data element dimensions
-	    if (c.dataElementDimensions) {
-	        t.dataElementDimensions = c.dataElementDimensions;
-	    }
-	
 	    // force apply
 	    _extends(t, forceApplyConfig);
 	
@@ -12563,6 +12578,8 @@
 	};
 	
 	Layout.prototype.getDataTypeUrl = function () {
+	    var _OUTPUT_TYPE_EVENT, _OUTPUT_TYPE_ENROLLME, _urlMap;
+	
 	    var t = this,
 	        refs = t.getRefs();
 	
@@ -12575,7 +12592,9 @@
 	    var OUTPUT_TYPE_EVENT = optionConfig.getOutputType('event').id;
 	    var OUTPUT_TYPE_ENROLLMENT = optionConfig.getOutputType('enrollment').id;
 	
-	    var url = this.dataType === DATA_TYPE_AGG ? '/events/aggregate' : this.outputType === OUTPUT_TYPE_EVENT ? '/events/query' : '/enrollments/query';
+	    var urlMap = (_urlMap = {}, _defineProperty(_urlMap, OUTPUT_TYPE_EVENT, (_OUTPUT_TYPE_EVENT = {}, _defineProperty(_OUTPUT_TYPE_EVENT, DATA_TYPE_AGG, '/events/aggregate'), _defineProperty(_OUTPUT_TYPE_EVENT, DATA_TYPE_EVENT, '/events/query'), _OUTPUT_TYPE_EVENT)), _defineProperty(_urlMap, OUTPUT_TYPE_ENROLLMENT, (_OUTPUT_TYPE_ENROLLME = {}, _defineProperty(_OUTPUT_TYPE_ENROLLME, DATA_TYPE_AGG, '/enrollments/aggregate'), _defineProperty(_OUTPUT_TYPE_ENROLLME, DATA_TYPE_EVENT, '/enrollments/query'), _OUTPUT_TYPE_ENROLLME)), _urlMap);
+	
+	    var url = urlMap[this.outputType][this.dataType];
 	
 	    return url || dimensionConfig.dataTypeUrl[dimensionConfig.getDefaultDataType()] || '';
 	};
@@ -30190,6 +30209,12 @@
 	
 	            // add to layout value and timeField stores
 	            this.each(function (record) {
+	
+	                // program stage does not make sense for attributes and program indicators
+	                if (record.data.isAttribute || record.data.isProgramIndicator) {
+	                    delete record.data.programStage;
+	                }
+	
 	                if ((0, _arrayContains2.default)(numericValueTypes, record.data.valueType)) {
 	                    layoutWindow.valueStore.add(record.data);
 	                }
@@ -31009,17 +31034,16 @@
 	
 	                if (storeItem) {
 	                    dataElements.push(_extends({}, storeItem.data, {
-	                        legendSet: getLegendSetForDimension(item, dataElementDimensions),
-	                        programStage: {
-	                            id: stage.getValue()
-	                        }
+	                        legendSet: getLegendSetForDimension(item, dataElementDimensions)
 	                    }));
 	                }
 	            } else if ((0, _isObject2.default)(item)) {
 	                // 2.38
-	                item.programStage = item.programStage || layout.programStage;
+	                if (item.isDataElement) {
+	                    item.programStage = item.programStage || layout.programStage;
+	                }
 	
-	                var itemConfig = _extends({}, item.data, item.programStage && getDataElementFromStorage(item.programStage.id, item.dimension || item.id), (_program.attributes || []).find(function (attr) {
+	                var itemConfig = _extends({}, item.data, item.isDataElement && item.programStage && getDataElementFromStorage(item.programStage.id, item.dimension || item.id), (_program.attributes || []).find(function (attr) {
 	                    return attr.id === item.dimension || attr.id === item.id;
 	                }), (_program.programIndicators || []).find(function (pi) {
 	                    return pi.id === item.dimension || pi.id === item.id;
@@ -31027,12 +31051,23 @@
 	                    filter: item.filter
 	                });
 	
-	                dataElements.push(_extends({}, itemConfig, {
-	                    programStage: itemConfig.programStage ? itemConfig.programStage : {
-	                        id: stage.getValue()
-	                    },
+	                itemConfig = _extends({}, itemConfig, {
 	                    legendSet: getLegendSetForDimension(itemConfig.id, dataElementDimensions)
-	                }));
+	                });
+	
+	                if (!itemConfig.programStage && item.isDataElement) {
+	                    itemConfig = _extends({}, itemConfig, {
+	                        programStage: {
+	                            id: stage.getValue()
+	                        }
+	                    });
+	                }
+	
+	                if (!itemConfig.programStage) {
+	                    delete itemConfig.programStage;
+	                }
+	
+	                dataElements.push(itemConfig);
 	            }
 	        }
 	

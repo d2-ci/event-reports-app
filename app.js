@@ -9350,7 +9350,7 @@
 	
 	        var refreshInterpretationDataModel = function refreshInterpretationDataModel(interpretationPanel) {
 	            Ext.Ajax.request({
-	                url: encodeURI(apiPath + '/interpretations/' + interpretation.id + '.json?fields=*,user[id,displayName,userCredentials[username]],likedBy[id,displayName],comments[id,lastUpdated,text,user[id,displayName,userCredentials[username]]]'),
+	                url: encodeURI(apiPath + '/interpretations/' + interpretation.id + '.json?fields=*,user[id,displayName,username],likedBy[id,displayName],comments[id,lastUpdated,text,user[id,displayName,username]]'),
 	                method: 'GET',
 	                scope: this,
 	                success: function success(r) {
@@ -10138,7 +10138,7 @@
 	        new refs.api.Request(refs, {
 	            baseUrl: appManager.getApiPath() + '/users.json',
 	            type: 'json',
-	            params: ['query=' + search, 'fields=displayName,userCredentials[username]', 'order=displayName:asc', 'pageSize=5'],
+	            params: ['query=' + search, 'fields=displayName,username', 'order=displayName:asc', 'pageSize=5'],
 	            success: function success(response) {
 	                onSuccess(response.users);
 	            }
@@ -10160,12 +10160,12 @@
 	            return users.map(function (user) {
 	                return {
 	                    xtype: 'label',
-	                    html: user.displayName + " (" + user.userCredentials.username + ")",
+	                    html: user.displayName + " (" + user.username + ")",
 	                    listeners: {
 	                        'render': function render(label) {
 	                            label.getEl().parent().on('click', function () {
 	                                splitText.splice(-1, 1);
-	                                var newText = splitText.join("@") + "@" + user.userCredentials.username;
+	                                var newText = splitText.join("@") + "@" + user.username;
 	                                component.setValue(newText);
 	                                this.hide();
 	                            }, label);
@@ -12356,7 +12356,7 @@
 	// dep 1
 	
 	var getFullId = function getFullId(dim) {
-	    return (dim.programStage ? dim.programStage.id + '.' : '') + dim.dimension;
+	    return (dim.programStage && dim.programStage.id ? dim.programStage.id + '.' : '') + dim.dimension;
 	};
 	
 	Dimension.prototype.url = function (isSorted, response, isFilter) {
@@ -12428,6 +12428,8 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
 	var Layout = exports.Layout = function Layout(refs, c, applyConfig, forceApplyConfig) {
 	    var t = this;
 	
@@ -12443,6 +12445,24 @@
 	
 	    // inherit
 	    _extends(t, new _d2Analysis.Layout(refs, c, applyConfig));
+	
+	    // data element dimensions
+	    if (c.dataElementDimensions) {
+	        t.dataElementDimensions = c.dataElementDimensions;
+	    }
+	
+	    // add isDataElement to distinguish from attributes and program indicators
+	    if (t.dataElementDimensions) {
+	        [].concat(t.columns, t.rows, t.filters).filter(function (dimension) {
+	            return dimension;
+	        }).forEach(function (dimension) {
+	            if (c.dataElementDimensions.find(function (de) {
+	                return de.dataElement.id === dimension.dimension;
+	            })) {
+	                dimension.isDataElement = true;
+	            }
+	        });
+	    }
 	
 	    // program
 	    t.program = (0, _isObject2.default)(c.program) ? c.program : null;
@@ -12563,6 +12583,8 @@
 	};
 	
 	Layout.prototype.getDataTypeUrl = function () {
+	    var _OUTPUT_TYPE_EVENT, _OUTPUT_TYPE_ENROLLME, _urlMap;
+	
 	    var t = this,
 	        refs = t.getRefs();
 	
@@ -12575,7 +12597,9 @@
 	    var OUTPUT_TYPE_EVENT = optionConfig.getOutputType('event').id;
 	    var OUTPUT_TYPE_ENROLLMENT = optionConfig.getOutputType('enrollment').id;
 	
-	    var url = this.dataType === DATA_TYPE_AGG ? '/events/aggregate' : this.outputType === OUTPUT_TYPE_EVENT ? '/events/query' : '/enrollments/query';
+	    var urlMap = (_urlMap = {}, _defineProperty(_urlMap, OUTPUT_TYPE_EVENT, (_OUTPUT_TYPE_EVENT = {}, _defineProperty(_OUTPUT_TYPE_EVENT, DATA_TYPE_AGG, '/events/aggregate'), _defineProperty(_OUTPUT_TYPE_EVENT, DATA_TYPE_EVENT, '/events/query'), _OUTPUT_TYPE_EVENT)), _defineProperty(_urlMap, OUTPUT_TYPE_ENROLLMENT, (_OUTPUT_TYPE_ENROLLME = {}, _defineProperty(_OUTPUT_TYPE_ENROLLME, DATA_TYPE_AGG, '/enrollments/aggregate'), _defineProperty(_OUTPUT_TYPE_ENROLLME, DATA_TYPE_EVENT, '/enrollments/query'), _OUTPUT_TYPE_ENROLLME)), _urlMap);
+	
+	    var url = urlMap[this.outputType][this.dataType];
 	
 	    return url || dimensionConfig.dataTypeUrl[dimensionConfig.getDefaultDataType()] || '';
 	};
@@ -18036,7 +18060,7 @@
 	        instanceManager = refs.instanceManager;
 	
 	    var apiPath = appManager.getApiPath(),
-	        username = appManager.userAccount.userCredentials.username,
+	        username = appManager.userAccount.username,
 	        eventType = instanceManager.dataStatisticsEventType;
 	
 	    return {
@@ -18130,7 +18154,7 @@
 	        'Content-Type': 'application/json'
 	    };
 	
-	    t.defaultAnalysisFields = ['*', 'interpretations[*,user[id,displayName,userCredentials[username]],likedBy[id,displayName],' + 'comments[id,lastUpdated,text,user[id,displayName,userCredentials[username]]]]', 'columns[dimension,filter,programStage[id],legendSet[id],items[dimensionItem~rename(id),dimensionItemType,$]]', 'rows[dimension,filter,programStage[id],legendSet[id],items[dimensionItem~rename(id),dimensionItemType,$]]', 'filters[dimension,filter,programStage[id],legendSet[id],items[dimensionItem~rename(id),dimensionItemType,$]]', 'program[id,displayName~rename(name),enrollmentDateLabel,incidentDateLabel]', 'programStage[id,displayName~rename(name),executionDateLabel]', 'access', 'userGroupAccesses', 'publicAccess', 'displayDescription', 'user[displayName,userCredentials[username]]', '!href', '!rewindRelativePeriods', '!userOrganisationUnit', '!userOrganisationUnitChildren', '!userOrganisationUnitGrandChildren', '!externalAccess', '!relativePeriods', '!columnDimensions', '!rowDimensions', '!filterDimensions', '!organisationUnitGroups', '!itemOrganisationUnitGroups', '!indicators', '!dataElements', '!dataElementOperands', '!dataElementGroups', '!dataSets', '!periods', '!organisationUnitLevels', '!organisationUnits'];
+	    t.defaultAnalysisFields = ['*', 'interpretations[*,user[id,displayName,username],likedBy[id,displayName],' + 'comments[id,lastUpdated,text,user[id,displayName,username]]]', 'columns[dimension,filter,programStage[id],legendSet[id],items[dimensionItem~rename(id),dimensionItemType,$]]', 'rows[dimension,filter,programStage[id],legendSet[id],items[dimensionItem~rename(id),dimensionItemType,$]]', 'filters[dimension,filter,programStage[id],legendSet[id],items[dimensionItem~rename(id),dimensionItemType,$]]', 'program[id,displayName~rename(name),enrollmentDateLabel,incidentDateLabel]', 'programStage[id,displayName~rename(name),executionDateLabel]', 'access', 'userGroupAccesses', 'publicAccess', 'displayDescription', 'user[displayName,username]', '!href', '!rewindRelativePeriods', '!userOrganisationUnit', '!userOrganisationUnitChildren', '!userOrganisationUnitGrandChildren', '!externalAccess', '!relativePeriods', '!columnDimensions', '!rowDimensions', '!filterDimensions', '!organisationUnitGroups', '!itemOrganisationUnitGroups', '!indicators', '!dataElements', '!dataElementOperands', '!dataElementGroups', '!dataSets', '!periods', '!organisationUnitLevels', '!organisationUnits'];
 	
 	    t.displayPropertyMap = {
 	        'name': 'displayName',
@@ -18264,7 +18288,7 @@
 	        new t.refs.api.Request(t.refs, {
 	            baseUrl: t.getApiPath() + '/me.json',
 	            type: 'json',
-	            params: ['fields=id,firstName,surname,userCredentials[username],settings'],
+	            params: ['fields=id,firstName,surname,username,settings'],
 	            success: function success(response) {
 	                t.userAccount = response;
 	
@@ -30190,6 +30214,12 @@
 	
 	            // add to layout value and timeField stores
 	            this.each(function (record) {
+	
+	                // program stage does not make sense for attributes and program indicators
+	                if (record.data.isAttribute || record.data.isProgramIndicator) {
+	                    delete record.data.programStage;
+	                }
+	
 	                if ((0, _arrayContains2.default)(numericValueTypes, record.data.valueType)) {
 	                    layoutWindow.valueStore.add(record.data);
 	                }
@@ -31009,17 +31039,16 @@
 	
 	                if (storeItem) {
 	                    dataElements.push(_extends({}, storeItem.data, {
-	                        legendSet: getLegendSetForDimension(item, dataElementDimensions),
-	                        programStage: {
-	                            id: stage.getValue()
-	                        }
+	                        legendSet: getLegendSetForDimension(item, dataElementDimensions)
 	                    }));
 	                }
 	            } else if ((0, _isObject2.default)(item)) {
 	                // 2.38
-	                item.programStage = item.programStage || layout.programStage;
+	                if (item.isDataElement) {
+	                    item.programStage = item.programStage || layout.programStage;
+	                }
 	
-	                var itemConfig = _extends({}, item.data, item.programStage && getDataElementFromStorage(item.programStage.id, item.dimension || item.id), (_program.attributes || []).find(function (attr) {
+	                var itemConfig = _extends({}, item.data, item.isDataElement && item.programStage && getDataElementFromStorage(item.programStage.id, item.dimension || item.id), (_program.attributes || []).find(function (attr) {
 	                    return attr.id === item.dimension || attr.id === item.id;
 	                }), (_program.programIndicators || []).find(function (pi) {
 	                    return pi.id === item.dimension || pi.id === item.id;
@@ -31027,12 +31056,23 @@
 	                    filter: item.filter
 	                });
 	
-	                dataElements.push(_extends({}, itemConfig, {
-	                    programStage: itemConfig.programStage ? itemConfig.programStage : {
-	                        id: stage.getValue()
-	                    },
+	                itemConfig = _extends({}, itemConfig, {
 	                    legendSet: getLegendSetForDimension(itemConfig.id, dataElementDimensions)
-	                }));
+	                });
+	
+	                if (!itemConfig.programStage && item.isDataElement) {
+	                    itemConfig = _extends({}, itemConfig, {
+	                        programStage: {
+	                            id: stage.getValue()
+	                        }
+	                    });
+	                }
+	
+	                if (!itemConfig.programStage) {
+	                    delete itemConfig.programStage;
+	                }
+	
+	                dataElements.push(itemConfig);
 	            }
 	        }
 	
@@ -33414,7 +33454,7 @@
 	        new Request(refs, {
 	            baseUrl: appManager.getApiPath() + '/me.json',
 	            type: 'json',
-	            param: ['fields=id,firstName,surname,userCredentials[username],settings'],
+	            param: ['fields=id,firstName,surname,username,settings'],
 	            success: function success(response) {
 	                appManager.userAccount = response;
 	

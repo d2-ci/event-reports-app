@@ -15109,29 +15109,28 @@
 	        return;
 	    }
 	
-	    if (t.type === 'json') {
-	        return $.getJSON(url, success).error(error).complete(complete);
-	    } else {
-	        var method = config.method || t.method,
-	            headers = config.headers || t.headers,
-	            dataType = config.dataType || t.dataType,
-	            contentType = config.contentType || t.contentType,
-	            data = config.data || t.data,
-	            xhr = {};
+	    var method = config.method || t.method,
+	        headers = config.headers || t.headers,
+	        dataType = config.dataType || t.dataType,
+	        contentType = config.contentType || t.contentType,
+	        data = config.data || t.data,
+	        xhr = {};
 	
-	        xhr.url = url;
-	        xhr.method = method;
-	        xhr.type = method;
-	        xhr.data = data;
-	        headers && (xhr.headers = headers);
-	        dataType && (xhr.dataType = dataType);
-	        contentType && (xhr.contentType = contentType);
-	        xhr.success = success;
-	        xhr.error = error;
-	        xhr.complete = completeFn;
+	    xhr.url = url;
+	    xhr.method = method;
+	    xhr.type = method;
+	    xhr.data = data;
+	    headers && (xhr.headers = headers);
+	    dataType && (xhr.dataType = dataType);
+	    contentType && (xhr.contentType = contentType);
+	    xhr.success = success;
+	    xhr.error = error;
+	    xhr.complete = completeFn;
+	    xhr.xhrFields = {
+	        withCredentials: true
+	    };
 	
-	        return $.ajax(xhr);
-	    }
+	    return $.ajax(xhr);
 	};
 	//# sourceMappingURL=Request.js.map
 

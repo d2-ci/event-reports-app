@@ -3,20 +3,19 @@
   "default_locale": "en",
   "activities": {
     "dhis": {
-      "href": "..",
-      "auth": "admin:district",
-      "devHref": "http://localhost:8080"
+      "href": "*"
     }
   },
   "appType": "APP",
   "name": "DHIS2 event reports app",
-  "version": "33.2.72",
+  "version": "33.3.0",
   "description": "Event reports app",
   "developer": {
-    "name": "DHIS2 visualization team"
+    "name": "Jan Henrik Øverland"
   },
+  "short_name": "event-reports",
   "icons": {
-    "48": "icon.png"
+    "48": "dhis2-app-icon.png"
   },
-  "manifest_generated_at": "Mon Mar 17 2025 19:45:47 GMT+0000 (Coordinated Universal Time)"
+  "manifest_generated_at": "Mon Mar 17 2025 20:53:21 GMT+0000 (Coordinated Universal Time)"
 }

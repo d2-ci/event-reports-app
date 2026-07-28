@@ -15330,6 +15330,14 @@
 	        }).forEach(function (key) {
 	            return dimensions[getSplitElementId(key)] = dimensions[key];
 	        });
+	
+	        var items = config.metaData.items;
+	
+	        Object.keys(items).filter(function (key) {
+	            return key.includes('.');
+	        }).forEach(function (key) {
+	            return items[getSplitElementId(key)] = items[key];
+	        });
 	    })();
 	
 	    t.optionCodeIdMap = function () {
@@ -30512,7 +30520,7 @@
 	            new api.Request(refs, {
 	                baseUrl: appManager.getApiPath() + '/programs.json',
 	                type: 'json',
-	                params: ['filter=id:eq:' + programId, ['fields=programType,programStages[id,displayName~rename(name),executionDateLabel]', 'programIndicators[id,' + displayPropertyUrl + ']', 'programTrackedEntityAttributes[trackedEntityAttribute[id,' + displayPropertyUrl + ',valueType,confidential,optionSet[id,displayName~rename(name)],legendSets~rename(storageLegendSets)[id,displayName~rename(name)]]]', 'categoryCombo[id,name,categories[id,' + displayPropertyUrl + ',categoryOptions[id,' + displayPropertyUrl + ']]]'].join(''), 'paging=false'],
+	                params: ['filter=id:eq:' + programId, ['fields=programType,programStages[id,displayName~rename(name),executionDateLabel]', 'programIndicators[id,' + displayPropertyUrl + ']', 'programTrackedEntityAttributes[trackedEntityAttribute[id,' + displayPropertyUrl + ',valueType,confidential,optionSet[id,displayName~rename(name)],legendSets~rename(storageLegendSets)[id,displayName~rename(name)]]]', 'categoryCombo[id,name,categories[id,' + displayPropertyUrl + ',categoryOptions[id,' + displayPropertyUrl + ']]]'].join(','), 'paging=false'],
 	                success: function success(r) {
 	                    var _program = r.programs[0];
 	

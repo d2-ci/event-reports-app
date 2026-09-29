@@ -28991,7 +28991,7 @@
 	                format: 'json',
 	                noCache: false,
 	                extraParams: {
-	                    fields: 'children[id,' + displayPropertyUrl + ',children::isNotEmpty~rename(hasChildren)&paging=false'
+	                    fields: 'children[id,' + displayPropertyUrl + ',children::isNotEmpty~rename(hasChildren)]&paging=false'
 	                },
 	                url: apiPath + '/organisationUnits',
 	                reader: {
@@ -32075,7 +32075,7 @@
 	                format: 'json',
 	                noCache: false,
 	                extraParams: {
-	                    fields: 'children[id,' + displayPropertyUrl + ',children::isNotEmpty~rename(hasChildren)&paging=false'
+	                    fields: 'children[id,' + displayPropertyUrl + ',children::isNotEmpty~rename(hasChildren)]' + '&paging=false'
 	                },
 	                url: appManager.getApiPath() + '/organisationUnits',
 	                reader: {
